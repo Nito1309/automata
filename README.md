@@ -1,4 +1,4 @@
-# automata
+# Automata
 Autómata que es capaz de identificar los siguientes tokens:
         Palabra reservada (if, else, switch, case, default, for, while, break, int, String, double, char)
         Identificador (Inicia con letra, sin espacios en blanco, sin caracteres especiales, excepto el guión bajo)
