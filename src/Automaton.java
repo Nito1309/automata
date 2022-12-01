@@ -53,10 +53,14 @@ public class Automaton {
                         AND(nextChar());
                     if(c =='|')
                         OR(nextChar());
+                    if(c == '=')
+                        assignment(nextChar());
+                    if(c == '!')
+                        logicOperator21(nextChar());
                     if(isArithmeticOperator(c))
                         arithmeticOperator(c);
                     if(isEndingWithEqual(c))
-                        endingWithEqual(nextChar(),c);
+                        relationalOperator(nextChar());
                     if (c != '`') {//Todo lo demas
                             //textArea.append("@");
                             initialState01(nextChar());
@@ -67,26 +71,33 @@ public class Automaton {
         }
     }
 
-    private void endingWithEqual(char newChar, char lastChar) {
-        if (newChar == '=') {
+    private void assignment(char nextChar){
+        if(nextChar == '=')
+                relationalOperator(nextChar);
+            else{
+                charID--;
+                addResult(5);
+                initialState01(nextChar);
+        }
+    }
+
+    private void logicOperator21(char nextChar){ //!
+        if(nextChar=='='){
+            relationalOperator(nextChar);
+        }else{
+            addResult(3);
+            initialState01(nextChar);
+        }
+    }
+
+    private void relationalOperator(char nextChar) {
+        if(nextChar == '='){
             addResult(2);
             initialState01(nextChar());
         }else{
-            if (lastChar == '!') {
-                addResult(3);
-                initialState01(nextChar());
-            }
-            if(lastChar == '=') {
-                    charID--;
-                    addResult(5);
-                    initialState01(nextChar());
-
-            }else{
-                    charID--;
-                    addResult(2);
-                    initialState01(nextChar());
-
-            }
+            charID--;
+            addResult(2);
+            initialState01(nextChar());
         }
     }
 
@@ -263,7 +274,7 @@ public class Automaton {
     private boolean isParenthesis(char c){return c == '(' || c == ')';}
     private boolean isBracket(char c){ return c == '{' || c == '}';}
     private boolean isArithmeticOperator(char c){ return c == '*' || c == '+' || c == '-' || c == '%';}
-    private boolean isEndingWithEqual(char c){ return  (c == '<' ||c == '>' ||c == '=' ||c == '!');}
+    private boolean isEndingWithEqual(char c){ return  (c == '<' ||c == '>');}
     private void parenthesis(){
         addResult(9);
         initialState01(nextChar());
