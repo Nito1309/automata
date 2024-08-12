@@ -1,5 +1,4 @@
 # Automata
-## Project requirements: 
 
 ## English:
 
